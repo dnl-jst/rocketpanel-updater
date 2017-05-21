@@ -1,3 +1,3 @@
 FROM docker:stable
-COPY ./src/ /app
-CMD ["/app/update.sh"]
+COPY ./src /app
+CMD ["sh", "/app/update.sh"]
