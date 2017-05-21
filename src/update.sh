@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# fetch updates
+# fetch latest images
 docker pull mysql:5.7
 docker pull dnljst/rocketpanel-control
 
@@ -15,7 +15,7 @@ docker rm rocketpanel-mysql
 # create main mysql container
 docker run -d \
 	--name rocketpanel-mysql \
-	-e "MYSQL_ROOT_PASSWORD=rootpass" \
+	-e "MYSQL_ROOT_PASSWORD=`cat /opt/rocketpanel/.rocketpanel-mysql-root-password`" \
 	-e "MYSQL_DATABASE=rocketpanel" \
 	-v /opt/rocketpanel/mysql/data/:/var/lib/mysql \
 	mysql:5.7
