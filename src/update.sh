@@ -34,6 +34,9 @@ docker run -d \
 	-p 8444:443 \
 	dnljst/rocketpanel-control
 
+# create caddycerts directory
+mkdir -p /opt/rocketpanel/etc/caddycerts
+
 # install caddy as frontend reverse-proxy
 docker run -d \
     --name rocketpanel-caddy \
