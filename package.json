@@ -1,0 +1,24 @@
+{
+  "name": "rocketpanel-updater",
+  "version": "0.1.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dnl-jst/rocketpanel-updater.git"
+  },
+  "author": "Daniel Jost <info@daniel-jost.de>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dnl-jst/rocketpanel-updater/issues"
+  },
+  "homepage": "https://github.com/dnl-jst/rocketpanel-updater#readme",
+  "dependencies": {
+    "async": "^2.4.0",
+    "dockerode": "^2.4.3"
+  }
+}
