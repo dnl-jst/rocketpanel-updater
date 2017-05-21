@@ -3,6 +3,7 @@
 # fetch latest images
 docker pull mysql:5.7
 docker pull dnljst/rocketpanel-control
+docker pull abiosoft/caddy
 
 # stop and remove old rocketpanel-control container
 docker stop rocketpanel-control
@@ -11,6 +12,9 @@ docker rm rocketpanel-control
 # stop and remove old rocketpanel-mysql container
 docker stop rocketpanel-mysql
 docker rm rocketpanel-mysql
+
+docker stop rocketpanel-caddy
+docker rm rocketpanel-caddy
 
 # create main mysql container
 docker run -d \
@@ -29,3 +33,12 @@ docker run -d \
 	-v /var/run/docker.sock:/var/run/docker.sock \
 	-p 8444:443 \
 	dnljst/rocketpanel-control
+
+# install caddy as frontend reverse-proxy
+docker run -d \
+    --name rocketpanel-caddy \
+    -e "CADDYPATH=/opt/rocketpanel/etc/caddycerts" \
+    -v /opt/rocketpanel/etc/caddycerts:/opt/rocketpanel/etc/caddycerts \
+    -v /opt/rocketpanel/etc/Caddyfile:/etc/Caddyfile \
+    -p 80:80 -p 443:443 \
+    abiosoft/caddy
