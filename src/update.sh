@@ -36,6 +36,7 @@ docker run -d \
 
 # create caddycerts directory
 mkdir -p /opt/rocketpanel/etc/caddycerts
+touch /opt/rocketpanel/etc/Caddyfile
 
 # install caddy as frontend reverse-proxy
 docker run -d \
