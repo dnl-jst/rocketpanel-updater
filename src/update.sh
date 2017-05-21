@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# fetch updates
+docker pull mysql:5.7
+docker pull dnljst/rocketpanel-control
+
 # stop and remove old rocketpanel-control container
 docker stop rocketpanel-control
 docker rm rocketpanel-control
