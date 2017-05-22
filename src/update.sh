@@ -1,5 +1,22 @@
 #!/bin/bash
 
+# create mysql data directory
+mkdir -p /opt/rocketpanel/mysql/data/
+
+# create logs directory
+mkdir -p /opt/rocketpanel/logs
+
+# create vhosts directory
+mkdir -p /opt/rocketpanel/vhosts
+
+# check if mysql root password exists, otherwise create one
+if [ ! -f /opt/rocketpanel/.rocketpanel-mysql-root-password ]; then
+
+    # generate root password
+    date +%s | sha256sum | base64 | head -c 32 > /opt/rocketpanel/.rocketpanel-mysql-root-password
+
+fi
+
 # check if ftp configuration exists, otherwise install it
 if [ ! -f /opt/rocketpanel/etc/proftpd.conf ]; then
 
@@ -10,6 +27,7 @@ if [ ! -f /opt/rocketpanel/etc/proftpd.conf ]; then
 
     # replace mysql root password
     sed -i -e 's/%%rocketpanel-root-password%%/`cat /opt/rocketpanel/.rocketpanel-mysql-root-password`/g' /opt/rocketpanel/etc/proftpd.conf
+
 fi
 
 # fetch latest images
