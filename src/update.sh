@@ -23,7 +23,7 @@ if [ ! -f /opt/rocketpanel/etc/proftpd.conf ]; then
     echo create proftpd configuration file
 
     # copy proftpd configuration
-    cp /app/proftpd.conf /opt/rocketpanel/etc/proftpd.conf
+    cp /app/proftpd.conf /opt/rocketpanel/etc/
 
     # replace mysql root password
     sed -i -e 's/%%rocketpanel-root-password%%/`cat /opt/rocketpanel/.rocketpanel-mysql-root-password`/g' /opt/rocketpanel/etc/proftpd.conf
