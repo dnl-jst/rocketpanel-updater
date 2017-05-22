@@ -39,6 +39,7 @@ docker run -d \
 	-e "MYSQL_ROOT_PASSWORD=`cat /opt/rocketpanel/.rocketpanel-mysql-root-password`" \
 	-e "MYSQL_DATABASE=rocketpanel" \
 	-v /opt/rocketpanel/mysql/data/:/var/lib/mysql \
+	--restart always \
 	mysql:5.7
 
 # create rocketpanel control container
@@ -49,6 +50,7 @@ docker run -d \
 	-v /opt/rocketpanel/:/opt/rocketpanel \
 	-v /var/run/docker.sock:/var/run/docker.sock \
 	-p 8444:443 \
+	--restart always \
 	dnljst/rocketpanel-control
 
 # create caddycerts directory
@@ -62,6 +64,7 @@ docker run -d \
     -v /opt/rocketpanel/etc/caddycerts:/opt/rocketpanel/etc/caddycerts \
     -v /opt/rocketpanel/etc/Caddyfile:/etc/Caddyfile \
     -p 80:80 -p 443:443 \
+    --restart always \
     abiosoft/caddy
 
 # install proftpd as ftp server
@@ -71,4 +74,5 @@ docker run -d \
     -v /opt/rocketpanel/vhosts:/opt/rocketpanel/vhosts \
     -p 21:21 \
     -p 60000-60100:60000-60100 \
+    --restart always \
     pockost/proftpd
