@@ -16,6 +16,7 @@ fi
 docker pull mysql:5.7
 docker pull dnljst/rocketpanel-control
 docker pull abiosoft/caddy
+docker pull pockost/proftpd
 
 # stop and remove old rocketpanel-control container
 docker stop rocketpanel-control
@@ -70,6 +71,7 @@ docker run -d \
 # install proftpd as ftp server
 docker run -d \
     --name rocketpanel-ftp \
+    --link rocketpanel-mysql:mysql \
     -v /opt/rocketpanel/etc/proftpd.conf:/usr/local/etc/proftpd.conf \
     -v /opt/rocketpanel/vhosts:/opt/rocketpanel/vhosts \
     -p 21:21 \
