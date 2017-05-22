@@ -1,5 +1,17 @@
 #!/bin/bash
 
+# check if ftp configuration exists, otherwise install it
+if [ ! -f /opt/rocketpanel/etc/proftpd.conf ]; then
+
+    echo create proftpd configuration file
+
+    # copy proftpd configuration
+    cp /app/proftpd.conf /opt/rocketpanel/etc/proftpd.conf
+
+    # replace mysql root password
+    sed -i -e 's/%%rocketpanel-root-password%%/`cat /opt/rocketpanel/.rocketpanel-mysql-root-password`/g' /opt/rocketpanel/etc/proftpd.conf
+fi
+
 # fetch latest images
 docker pull mysql:5.7
 docker pull dnljst/rocketpanel-control
@@ -13,8 +25,13 @@ docker rm rocketpanel-control
 docker stop rocketpanel-mysql
 docker rm rocketpanel-mysql
 
+# stop and remove old rocketpanel-caddy container
 docker stop rocketpanel-caddy
 docker rm rocketpanel-caddy
+
+# stop and remove old rocketpanel-ftp container
+docker stop rocketpanel-ftp
+docker rm rocketpanel-ftp
 
 # create main mysql container
 docker run -d \
@@ -46,3 +63,12 @@ docker run -d \
     -v /opt/rocketpanel/etc/Caddyfile:/etc/Caddyfile \
     -p 80:80 -p 443:443 \
     abiosoft/caddy
+
+# install proftpd as ftp server
+docker run -d \
+    --name rocketpanel-ftp \
+    -v /opt/rocketpanel/etc/proftpd.conf:/usr/local/etc/proftpd.conf \
+    -v /opt/rocketpanel/vhosts:/opt/rocketpanel/vhosts \
+    -p 21:21 \
+    -p 60000-60100:60000-60100 \
+    pockost/proftpd
